@@ -1,3 +1,9 @@
 spring:
- application:
-  name: TaskProject
+  application:
+    name: TaskProject
+
+  data:
+    mongodb:
+      uri: xxxxx
+      database: xxxxx
+      auto-index-creation: true
