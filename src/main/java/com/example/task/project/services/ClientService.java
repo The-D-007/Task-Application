@@ -27,12 +27,13 @@ public class ClientService {
 
     public boolean saveNewUser(Client client) throws UserAlreadyExists, DataAccessException {
         Client userExist = clientRepository.findByUserName(client.getUserName());
-        if (!StringUtils.hasText(String.valueOf(userExist))) {
+        if (userExist != null) {
+            throw new UserAlreadyExists("Username is already taken");
+        } else {
             client.setPassword(passwordEncoder.encode(client.getPassword()));
             clientRepository.save(client);
             return true;
         }
-        throw new UserAlreadyExists("Username is already taken");
     }
     
     public boolean login(Client client) throws InvalidClientDataException, DataAccessException {
