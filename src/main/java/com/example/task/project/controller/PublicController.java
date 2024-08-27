@@ -1,6 +1,6 @@
 package com.example.task.project.controller;
 
-import com.example.task.project.customexceptions.InvalidClientDataException;
+import com.example.task.project.customexceptions.InvalidDataException;
 import com.example.task.project.customexceptions.UserAlreadyExists;
 import com.example.task.project.datacheck.ClientDataCheck;
 import com.example.task.project.entity.Client;
@@ -36,7 +36,7 @@ public class PublicController {
             if (userSaved) {
                 return new ResponseEntity<>("User is Created ", HttpStatus.OK);
             }
-        }catch (InvalidClientDataException e) {
+        }catch (InvalidDataException e) {
             log.error("Invalid client data: ", e);
             return new ResponseEntity<>(String.valueOf(e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (UserAlreadyExists e){
@@ -54,7 +54,7 @@ public class PublicController {
             Client client = clientDataCheck.checkClientLoginData(clientPojo);
             clientService.login(client);
             return new ResponseEntity<>("User login", HttpStatus.OK);
-        } catch (InvalidClientDataException e) {
+        } catch (InvalidDataException e) {
             log.error("Invalid client data: ", e);
             return new ResponseEntity<>(String.valueOf(e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (RuntimeException e) {

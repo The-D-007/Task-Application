@@ -1,6 +1,6 @@
 package com.example.task.project.datacheck;
 
-import com.example.task.project.customexceptions.InvalidClientDataException;
+import com.example.task.project.customexceptions.InvalidDataException;
 import com.example.task.project.entity.Client;
 import com.example.task.project.pojo.ClientPojo;
 import org.springframework.stereotype.Component;
@@ -11,12 +11,12 @@ public class ClientDataCheck {
 
     private final Client client = new Client();
 
-    public Client checkClientSignupData(ClientPojo clientPojo) throws InvalidClientDataException {
+    public Client checkClientSignupData(ClientPojo clientPojo) throws InvalidDataException {
         if (!StringUtils.hasText(clientPojo.getUserName()) || !StringUtils.hasText(clientPojo.getPassword()) ){
-            throw new InvalidClientDataException("Username and password must not be null or empty");
+            throw new InvalidDataException("Username and password must not be null or empty");
         }
         if (!clientPojo.getEmail().matches("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$")){
-            throw new InvalidClientDataException("Email address must be right");
+            throw new InvalidDataException("Email address must be right");
         }
        client.setUserName(clientPojo.getUserName());
         client.setPassword(clientPojo.getPassword());
@@ -24,9 +24,9 @@ public class ClientDataCheck {
         return client;
     }
 
-    public Client checkClientLoginData(ClientPojo clientPojo) throws InvalidClientDataException {
+    public Client checkClientLoginData(ClientPojo clientPojo) throws InvalidDataException {
         if (!StringUtils.hasText(clientPojo.getUserName()) || !StringUtils.hasText(clientPojo.getPassword())) {
-            throw new InvalidClientDataException("Username and password must not be null or empty");
+            throw new InvalidDataException("Username and password must not be null or empty");
         }
         client.setUserName(clientPojo.getUserName());
         client.setPassword(clientPojo.getPassword());
